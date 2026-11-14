@@ -24,13 +24,13 @@ Each returns, per option: findings, each claim tagged `KNOWN` (stated in the bri
 | F5 | Social cognition (TPJ) | Who is affected and how will they react? | Stakeholder map; reaction per option; trust and reputation effects | Over-weights others' opinions |
 | F6 | Emotion (insula/limbic) | Which option fits the person's stated values, where is regret likely? | Values fit; regret forecast (1 year, 10 years); whether fear or excitement is driving the choice | Subjective |
 
-Round 2 onward: add the objections aimed at this function and the rejected decision (labelled REJECTED).
+Round 2 onward: add the objections aimed at this function and the rejected decision (labelled REJECTED). Revised outputs add `REVISED:` (one line per change, no objection wording); the main agent drops this line when the output goes to M.
 
 ## Metacognition (M), after F1-F6
 Reads P and all current `[F#]` outputs only (no objections, no REJECTED, no Red Team). Output: `CONFLICTS:` where functions disagree; `UNSUPPORTED:` claims with no source; `CALIBRATION:` which functions look over- or under-confident; `MISSING:` information that would change the answer. Bias: sceptical of everyone.
 
 ## Red Team (RT), round 2 onward
-Inputs: P's case file, the rejected decision (citation tags removed) and the STANDING objections list (see dispatcher Retry); no F outputs. Brief: "Assume the rejected decision, or any decision close to it, failed a year from now." Output: three failure stories, each with the cheapest guard against it. Adversarial. Runs in parallel with the re-run functions.
+Inputs: P's case file, the rejected decision (citation tags removed) and the STANDING objections list (see dispatcher Retry); no F outputs. Brief: "Assume the rejected decision, or any decision close to it, failed a year from now." Output: three failure stories, each with the cheapest guard against it. Adversarial. Runs in parallel with the re-run functions; one call per round.
 
 ## Decision (D), after M (and RT in round 2+)
 Reads P, every `[F#]` output, M, and in round 2+ the REJECTED decision, its objections and RT. May only choose among P's options (including Defer). Do not reverse a point you changed in response to an objection unless you say why. Required block:

@@ -9,7 +9,7 @@ Then caveats (the voters' merged `CAVEATS`) and dissent: every BAD voter's block
 
 ## OUTPUT_FAIL (3 rejections or early stop)
 `The brain could not come up with a definitive decision after <R> rounds.`
-Then: best attempt with its tally; standing objections (the dispatcher's STANDING list: all objections from all rounds including the last, deduplicated by meaning, with the number of rounds that raised each); what would resolve it (the latest round's M missing-information list plus any NEEDS_EXTERNAL_INFO items). Then ask: halt the skill, perform another run, or accept the best attempt yourself?
+Then: best attempt with its tally; standing objections (the dispatcher's STANDING list: all objections from all rounds including the last, deduplicated by meaning, with the number of rounds that raised each); what would resolve it (the latest round's M missing-information list plus any NEEDS_EXTERNAL_INFO items; at most 4, in M's own order, then "(<n> more in the transcript)" if cut). Then ask: halt the skill, perform another run, or accept the best attempt yourself?
 
 ## OUTPUT_NEEDS_INFO (gate)
 The restated question plus at most 4 missing items. No fan-out cost was spent. Ask: halt the skill, or perform another run once you supply them?
