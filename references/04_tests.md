@@ -1,6 +1,6 @@
 # Verification (not run on real stakes)
 
-Use a TEST_MODE: print each stage's parsed result, and allow injecting a fixture instead of calling a stage. Run cheapest first. Voters run on their real models. Injected fixture votes must be complete valid blocks (VOTE, CONFIDENCE, at least one REASONS entry with a tag, BLOCKING, FIX, NEEDS_EXTERNAL_INFO), or they are invalid under 02_voters.md.
+Use a TEST_MODE: print each stage's parsed result, and allow injecting a fixture instead of calling a stage. Run cheapest first. Voters run on their real models. Injected fixture votes must be complete valid blocks (VOTE, CONFIDENCE, at least one REASONS entry with a tag, BLOCKING (on a BAD vote it opens with one location tag), FIX, NEEDS_EXTERNAL_INFO), or they are invalid under 02_voters.md.
 
 | # | Case | Method | Assert |
 |---|---|---|---|
@@ -12,5 +12,6 @@ Use a TEST_MODE: print each stage's parsed result, and allow injecting a fixture
 | T1 | "SQLite or Postgres for a single-user local CLI storing 10k rows?" | full run | Gate passes, round 1 accepts SQLite, every block parses |
 | T2 | The meme-coin question, full pipeline | full run | Final decision is not "all in"; Defer or a safe split wins, or the run fails safe |
 | T7 | Unforeseen-flaw pair: scratchpad `brain-council/t7/voter_brief_A.md` (flawed) and `_B.md` (sound control), sealed `key.md` written by an independent agent, flaw not known to the tester | voters only, both briefs | A is voted BAD by at least 2 of 3 and the BLOCKING line names the key's flaw; B is voted GOOD by at least 2 of 3. Open the key only after all six votes |
+| T8 | Location tag vs citation. Fixture set 1: every BAD vote cites `[P]` in REASONS but its BLOCKING opens `[F2]`. Fixture set 2: one BAD vote has `BLOCKING: [P] ...`, the others `[F2]`. Fixture set 3: a BAD vote whose BLOCKING has no leading tag | tally and retry routing only, no model calls (walk the rules) | Set 1: round 2 does NOT restart from P; re-run set = F2 + Threat + M + Red Team + D; STANDING lists the objection as `[F2]` with `cites: [P]`. Set 2: round 2 restarts from P and clears the cache. Set 3: the vote is invalid (one retry on that model, then abstain) |
 
-Order: T3, T2v, T5, T6, T4, T1, T2. A failure in T2v or T2 (a planted bad decision passing) fails the build.
+Order: T3, T2v, T5, T6, T8, T4, T1, T2. A failure in T2v or T2 (a planted bad decision passing) fails the build.

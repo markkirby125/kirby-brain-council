@@ -42,7 +42,7 @@ TALLY  per 02_voters.md.
 Never decide for the user. Print the restated question and at most 4 missing items (gate) or the failure report, then ask exactly: halt the skill, or perform another run? For a gate stop, "another run" means the user supplies the missing items and the skill restarts at round 1 with the cache. For a 3-rejection failure, offer a third choice: accept the best attempt (the user's call, never automatic).
 
 ## Retry (round R -> R+1)
-Keep a running STANDING list: every voter objection from every round, deduplicated by meaning, with its `[F#]`/`[P]`/`[D]` tag and the rounds that raised it.
+Keep a running STANDING list: every voter objection from every round, deduplicated by meaning, with its location tag (`[F#]`, `[M]`, `[RT]`, `[P]` or `[D]`), the rounds that raised it, and a `cites:` list of any other tags the voter gave as evidence.
 - Each re-run function brief gets: its own previous output (labelled PREVIOUS, so it revises instead of restarting); only the latest-round objections tagged to that function, deduplicated, each with the voters' FIX lines; and the rejected decision reduced to DECISION, RATIONALE, ASSUMPTIONS, REVERSIBILITY, KILL_SWITCH and FIRST_STEP, with citation tags removed (so no citation points at material the function cannot see), any plain-prose mention of another stage ("F2", "M6", "Threat") replaced by that stage's role name or dropped, and its OBJECTIONS_ADDRESSED line removed, labelled "REJECTED: do not re-propose unless you answer each objection explicitly."
 - Threat (F3) re-runs every round. If no objection is tagged to it, its brief carries PREVIOUS, REJECTED and the line `OBJECTIONS: NONE tagged to you.`
 - When forwarding an objection to a function, rewrite any tag or name of another stage in its text to that stage's role name (Threat, Metacognition). Never pass tags other than the receiving function's own.
@@ -50,7 +50,11 @@ Keep a running STANDING list: every voter objection from every round, deduplicat
 - M gets: P and the current F outputs (cached and fresh). It does not get objections, REJECTED or Red Team.
 - D gets: P, all F outputs, M, Red Team, the rejected decision (tags intact; they may point at outputs that have been revised), the latest-round objections, the voters' CAVEATS, and the full STANDING list so earlier fixes are not undone. D must not reverse a point it changed in response to an objection unless it says why in OBJECTIONS_ADDRESSED.
 
-Re-run set: functions tagged by voters, plus Threat, M, Red Team and D. Any `[P]` tag (framing disputed) re-runs everything starting at P.
+**Tags route; citations do not.** An objection's tag is its location tag: the tag that opens the voter's `BLOCKING:` line, naming the stage output that contains the flaw. Tags in `REASONS` are evidence for the vote. They never decide what re-runs. A `[P]` in `REASONS` or `cites:` is not a framing dispute.
+
+Re-run set: the functions named by a location tag, plus Threat, M, Red Team and D. A location tag of `[M]`, `[RT]` or `[D]` adds nothing, because those always re-run.
+
+`[P]` as a location tag means the flaw sits in P's RESTATED, FACTS, OPTIONS or DECIDABLE: the question was misread, a fact is wrong, or an option is missing or loaded. Any such objection from a BAD vote re-runs everything starting at P and clears the cache. If the objection fits more than one stage, the voter must name the earliest stage that contains the flaw.
 
 A function that is not re-run reuses its most recent output, whichever round produced it; a re-run starting at P clears the whole cache.
 
